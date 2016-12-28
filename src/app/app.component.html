@@ -1,0 +1,14 @@
+<!--<link rel="stylesheet" ng-href="{{ $ctrl.themes[ $ctrl.site.theme.definition.key ].style }}">-->
+<link rel="stylesheet" ng-href="{{ $ctrl.themes[ 'redux' ].style }}">
+
+<div ng-if="!$ctrl.isLoading">
+	<!--<gj-theme-injector
+		definition="$ctrl.site.theme.definition.definition"
+		theme="$ctrl.site.theme.theme"
+		>
+	</gj-theme-injector>-->
+
+	<!--<div ng-include="$ctrl.themes[ $ctrl.site.theme.definition.key ].template"></div>-->
+	<div ng-include="$ctrl.themes[ 'redux' ].template"></div>
+
+</div>

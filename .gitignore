@@ -1,0 +1,5 @@
+/node_modules/
+/src/bower-lib/
+/typings/
+/tasks/vendor/tmp-gamejolt.iss
+/build/
