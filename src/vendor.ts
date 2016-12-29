@@ -3,30 +3,13 @@
 // It also means that changes to the app.js files won't change the vendor.js file
 // so that we can keep this in cache.
 
-import 'reflect-metadata';
-import {
-	Inject,
-	Injectable,
-	provide,
-	Component,
-	Directive,
-	Input,
-	Output,
-	enableProdMode,
-	HostListener,
-	HostBinding,
-	Host,
-	Optional,
-	Self,
-	SkipSelf,
-	ViewChild,
-} from 'ng-metadata/core';
-import { bootstrap } from 'ng-metadata/platform';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
-const ngMetadata_core = {
+import {
+	NgModule,
 	Inject,
 	Injectable,
-	provide,
 	Component,
 	Directive,
 	Input,
@@ -39,13 +22,91 @@ const ngMetadata_core = {
 	Self,
 	SkipSelf,
 	ViewChild,
+	ElementRef,
+} from '@angular/core';
+
+import {
+	Location,
+	LocationStrategy,
+	PathLocationStrategy,
+	CommonModule,
+} from '@angular/common';
+
+import {
+	DomSanitizer,
+	BrowserModule,
+	Title,
+	Meta,
+	DOCUMENT,
+} from '@angular/platform-browser';
+
+import {
+	platformBrowserDynamic,
+} from '@angular/platform-browser-dynamic';
+
+import {
+	FormsModule,
+} from '@angular/forms';
+
+import {
+	HttpModule,
+	Http,
+	RequestMethod,
+} from '@angular/http';
+
+const ng_core = {
+	NgModule,
+	Inject,
+	Injectable,
+	Component,
+	Directive,
+	Input,
+	Output,
+	enableProdMode,
+	HostListener,
+	HostBinding,
+	Host,
+	Optional,
+	Self,
+	SkipSelf,
+	ViewChild,
+	ElementRef,
 };
 
-const ngMetadata_platform = {
-	bootstrap,
+const ng_common = {
+	Location,
+	LocationStrategy,
+	PathLocationStrategy,
+	CommonModule,
+};
+
+const ng_platformBrowser = {
+	DomSanitizer,
+	BrowserModule,
+	Title,
+	Meta,
+	DOCUMENT,
+};
+
+const ng_platformBrowserDynamic = {
+	platformBrowserDynamic,
+};
+
+const ng_forms = {
+	FormsModule,
+};
+
+const ng_http = {
+	HttpModule,
+	Http,
+	RequestMethod,
 };
 
 export default {
-	ngMetadata_core,
-	ngMetadata_platform,
+	ng_core,
+	ng_common,
+	ng_platformBrowser,
+	ng_platformBrowserDynamic,
+	ng_forms,
+	ng_http,
 };

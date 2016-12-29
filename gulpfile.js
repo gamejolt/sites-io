@@ -2,20 +2,24 @@ var gulp = require( 'gulp' );
 
 var config = {
 	staticCdn: 'http://sites.development.gamejolt.io',
-	extraBower: {
-		'angular-bootstrap': [
-			'src/transition/transition.js',
-			'src/position/position.js',
-			'src/bindHtml/bindHtml.js',
-			'src/tooltip/tooltip.js',
-			'src/collapse/collapse.js',
-			'src/modal/modal.js'
-		],
-	},
+	// extraBower: {
+	// 	'angular-bootstrap': [
+	// 		'src/transition/transition.js',
+	// 		'src/position/position.js',
+	// 		'src/bindHtml/bindHtml.js',
+	// 		'src/tooltip/tooltip.js',
+	// 		'src/collapse/collapse.js',
+	// 		'src/modal/modal.js'
+	// 	],
+	// },
 	rollup: {
 		vendor: {
-			'ng-metadata/core': 'vendor.ngMetadata_core',
-			'ng-metadata/platform': 'vendor.ngMetadata_platform',
+			'@angular/core': 'vendor.ng_core',
+			'@angular/common': 'vendor.ng_common',
+			'@angular/forms': 'vendor.ng_forms',
+			'@angular/platform-browser': 'vendor.ng_platformBrowser',
+			'@angular/platform-browser-dynamic': 'vendor.ng_platformBrowserDynamic',
+			'@angular/http': 'vendor.ng_http',
 		},
 	},
 	extraStyles: [
