@@ -1,20 +1,28 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "module": "es2015",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "noEmit": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "allowJs": true,
     "skipLibCheck": true,
-    "importHelpers": true
+    "lib": [
+      "es2015",
+      "dom"
+    ]
   },
   "exclude": [
     "build",
     "node_modules",
     "src/bower-lib"
-  ]
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": true,
+    "useWebpackText": true
+  }
 }

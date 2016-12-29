@@ -1,14 +1,19 @@
-<!--<link rel="stylesheet" ng-href="{{ $ctrl.themes[ $ctrl.site.theme.definition.key ].style }}">-->
-<link rel="stylesheet" ng-href="{{ $ctrl.themes[ 'redux' ].style }}">
+<div *ngIf="!isLoading">
+	<link rel="stylesheet" [href]="themes[ site.theme.definition.key ].style">
 
-<div ng-if="!$ctrl.isLoading">
-	<!--<gj-theme-injector
-		definition="$ctrl.site.theme.definition.definition"
-		theme="$ctrl.site.theme.theme"
+	<gj-theme-injector
+		[definition]="site.theme.definition.definition"
+		[theme]="site.theme.theme"
 		>
-	</gj-theme-injector>-->
+	</gj-theme-injector>
 
-	<!--<div ng-include="$ctrl.themes[ $ctrl.site.theme.definition.key ].template"></div>-->
-	<div ng-include="$ctrl.themes[ 'redux' ].template"></div>
+	<div *ngIf="site.theme.definition.key == 'vash'">
+		<gj-theme-vash
+			[game]="game"
+			[packages]="packages"
+			[mediaItems]="mediaItems"
+			>
+		</gj-theme-vash>
+	</div>
 
 </div>

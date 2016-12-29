@@ -1,5 +1,5 @@
-import { bootstrap } from 'ng-metadata/platform';
-import { enableProdMode, provide } from 'ng-metadata/core';
+import { bootstrap } from '@angular/platform';
+import { enableProdMode, provide } from '@angular/core';
 
 import ModelModule from './../lib/gj-lib-client/components/model/model';
 import MetaModule from './../lib/gj-lib-client/components/meta/meta';

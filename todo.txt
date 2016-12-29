@@ -1,0 +1,10 @@
+$location.path() -> Location.path()
+
+Change directions from snake-case to camelCase
+
+TODO
+
+[ ] Replace App with new App service declarations
+[ ] Remove @Inject calls
+[ ] Create modules for everything.
+[ ] Model isn't actually getting injected into models?
