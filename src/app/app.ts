@@ -17,6 +17,7 @@ import PartnerReferralModule from '../lib/gj-lib-client/components/partner-refer
 import PopoverModule from '../lib/gj-lib-client/components/popover/popover';
 import ThemeInjectorModule from '../lib/gj-lib-client/components/theme/injector/injector';
 import CardModule from '../lib/gj-lib-client/components/card/card';
+import CountdownModule from '../lib/gj-lib-client/components/countdown/countdown';
 
 import { App } from './app-service';
 import { AppComponent } from './app.component';
@@ -98,6 +99,7 @@ const AppModule = angular.module( 'App', [
 	TranslateSpoofModule,
 	ThemeInjectorModule,
 	CardModule,
+	CountdownModule,
 ] )
 .config( function(
 	$locationProvider: ng.ILocationProvider,

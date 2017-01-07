@@ -1,9 +1,4 @@
-<div class="frameset">
-	<div class="frame-top">
-
-		something
-
-	</div>
+<div class="frameset" ng-class="{ 'has-media-items': $ctrl.mediaItems.length }">
 	<div class="frame-content">
 
 		<div class="content">
@@ -36,9 +31,8 @@
 		</div>
 
 	</div>
-	<div class="frame-bottom">
+	<div class="frame-bottom" ng-if="$ctrl.mediaItems.length">
 		<gj-media-bar
-			ng-if="$ctrl.mediaItems.length"
 			media-items="$ctrl.mediaItems"
 			>
 		</gj-media-bar>

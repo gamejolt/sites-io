@@ -17,11 +17,13 @@ export class AppComponent
 
 	// Gotta do this so that the injection process works and replaces with the
 	// correct asset server.
-	themes = {};
+	templates = {};
 
 	constructor(
 		@Inject( '$location' ) $location: ng.ILocationService,
 		@Inject( '$sce' ) $sce: ng.ISCEService,
+		@Inject( '$window' ) private $window: ng.IWindowService,
+		@Inject( '$scope' ) private $scope: ng.IScope,
 		@Inject( 'Meta' ) private metaService: Meta,
 		@Inject( 'Api' ) api: any,
 		@Inject( 'Game_Screenshot' ) private screenshotModel: any,
@@ -29,33 +31,35 @@ export class AppComponent
 		@Inject( 'Game_Package' ) private packageModel: any,
 	)
 	{
-		const user = window.location.host.substr( 0, window.location.host.indexOf( '.' ) );
+		const user = GJ_ENVIRONMENT === 'development' ? 'cros' : window.location.host.substr( 0, window.location.host.indexOf( '.' ) );
 		const url = $location.path().substr( 1 );
 
-		this.themes = {
-		vash: {
-			style: $sce.trustAsResourceUrl( '/app/vash.css' ),
-			template: $sce.trustAsResourceUrl( '/app/themes/vash/vash.html' ),
-		},
-		redux: {
-			style: $sce.trustAsResourceUrl( '/app/redux.css' ),
-			template: $sce.trustAsResourceUrl( '/app/themes/redux/redux.html' ),
-		},
-	};
+		this.templates = {
+			vash: {
+				style: $sce.trustAsResourceUrl( '/app/vash.css' ),
+				view: $sce.trustAsResourceUrl( '/app/templates/vash/vash.html' ),
+			},
+			redux: {
+				style: $sce.trustAsResourceUrl( '/app/redux.css' ),
+				view: $sce.trustAsResourceUrl( '/app/templates/redux/redux.html' ),
+			},
+		};
 
-		api.sendRequest( `/web/sites/${user}/${url}` ).then( ( response: any ) => this.bootstrap( response ) );
+		api.sendRequest( `/sites-io/${user}/${url}` ).then( ( response: any ) => this.bootstrap( response ) );
+
+		this.$window.addEventListener( 'message', ( event: MessageEvent ) => this.themeUpdated( event ) );
 	}
 
-	bootstrap( response: any )
+	private bootstrap( response: any )
 	{
+		console.log( response );
+
 		this.isLoading = false;
 
 		this.metaService.title = 'yo';
 
 		this.site = response.site;
-		this.game = response.site.game;
-
-		console.log( this.site );
+		this.game = response.game;
 
 		this.mediaItems = [];
 		if ( response.mediaItems && response.mediaItems.length ) {
@@ -73,5 +77,23 @@ export class AppComponent
 		const packageData = this.packageModel.processPackagePayload( response );
 		angular.extend( this, packageData );
 		this.packages = this.packages || [];
+	}
+
+	private themeUpdated( event: MessageEvent )
+	{
+		this.$scope.$apply( () =>
+		{
+			switch ( event.data.type ) {
+				case 'theme-update': {
+
+					if ( !event.data.template ) {
+						return;
+					}
+
+					this.site.theme.template = event.data.template;
+					return;
+				};
+			}
+		} );
 	}
 }

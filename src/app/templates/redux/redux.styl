@@ -1,16 +1,6 @@
 @import '../../../bower-lib/bootstrap-stylus/stylus/variables'
 @import '../../../bower-lib/bootstrap-stylus/stylus/mixins'
 
-@keyframes marquee
-	0%
-		transform:translateX(100%)
-
-	50%
-		transform:translateX(0)
-
-	100%
-		transform:translateX(-100%)
-
 @keyframes blink
 	80%
 		opacity: 0
@@ -34,8 +24,6 @@ body
 	h1, h2, h3, h4, h5, h6
 		color: red
 		font-family: "Comic Sans MS", "Comic Sans", Arial, Helvetica, sans-serif
-		animation: marquee 5s linear infinite
-		transform: translateZ(0);
 
 	a
 	a:hover
@@ -46,6 +34,8 @@ body
 	hr
 		border-bottom: 5px ridge
 
+	blockquote
+		border: 0
 
 .frameset
 	position: absolute
@@ -54,7 +44,6 @@ body
 	bottom: 0
 	left: 0
 
-.frame-top
 .frame-content
 .frame-bottom
 	position: absolute
@@ -62,17 +51,15 @@ body
 	left: 0
 	overflow: auto
 
-.frame-top
-	top: 0
-	height: 150px
-	border-bottom: 5px ridge
-
 .frame-bottom
 	bottom: 0
 	height: 190px
 	border-top: 5px ridge
 
 .frame-content
-	top: 150px
-	bottom: 190px
+	top: 0
+	bottom: 0
 	overflow-x: hidden
+
+	.has-media-items &
+		bottom: 190px

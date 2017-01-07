@@ -19,8 +19,8 @@ var config = {
 		},
 	},
 	extraStyles: [
-		'src/app/themes/vash/vash.styl',
-		'src/app/themes/redux/redux.styl',
+		'src/app/templates/vash/vash.styl',
+		'src/app/templates/redux/redux.styl',
 	]
 };
 
