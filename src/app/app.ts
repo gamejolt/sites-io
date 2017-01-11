@@ -1,6 +1,7 @@
 import { bootstrap } from 'ng-metadata/platform';
 import { enableProdMode, provide } from 'ng-metadata/core';
 
+import EnvironmentModule from '../lib/gj-lib-client/components/environment/environment';
 import ModelModule from './../lib/gj-lib-client/components/model/model';
 import MetaModule from './../lib/gj-lib-client/components/meta/meta';
 import RulerModule from './../lib/gj-lib-client/components/ruler/ruler';
@@ -46,7 +47,7 @@ const AppModule = angular.module( 'App', [
 	'hmTouchEvents',
 
 	// GJ lib.
-	'gj.Environment',
+	EnvironmentModule,
 	'gj.Api',
 	'gj.Payload',
 	ModelModule,
