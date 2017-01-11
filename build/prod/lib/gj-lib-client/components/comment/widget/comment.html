@@ -1,0 +1,179 @@
+<div id="comment-{{ comment.id }}" class="comment-widget-comment"
+	ng-class="::{ 'comment-widget-comment-is-child': isChild, 'comment-widget-comment-highlighted': ctrl.highlightedComment == comment.id }"
+	>
+
+	<div class="comment-widget-comment-avatar">
+		<span gj-user-avatar="::comment.user"></span>
+	</div>
+
+	<div class="comment-widget-comment-body">
+
+		<div class="comment-widget-comment-title">
+			<span ng-if="::isOwner" class="comment-widget-comment-owner tag visible-xs pull-right"
+				translate
+				translate-comment="This signifies the owner of what the comment is posted on. For example, if this is a comment by the game's developer."
+				>
+				Owner
+			</span>
+			<a ng-href="{{ ::profileUrl }}">
+				{{ ::comment.user.display_name }}
+				<small>@{{ ::comment.user.username }}</small>
+			</a>
+			<span class="comment-widget-comment-time" am-time-ago="comment.posted_on"></span>
+			<span ng-if="::isOwner" class="comment-widget-comment-owner tag hidden-xs" translate>Owner</span>
+		</div>
+
+		<gj-fade-collapse
+			fade-collapse-height="300"
+			fade-collapse-is-open="commentState.showFullComment"
+			fade-collapse-is-required="commentState.canToggleComment"
+			>
+			<div class="comment-widget-comment-content"
+				ng-bind-html="ctrl.isShowingTranslations && ctrl.translations[ comment.id ].content ? ctrl.translations[ comment.id ].content : comment.comment_compiled"
+				>
+			</div>
+		</gj-fade-collapse>
+
+		<a class="hidden-text-expander"
+			ng-if="::commentState.canToggleComment"
+			ng-click="commentState.showFullComment = !commentState.showFullComment"
+			gj-track-event="comment-widget:toggle-full-content"
+			></a>
+
+		<div class="comment-widget-comment-videos" ng-if="::comment.videos.length">
+			<div class="row">
+				<gj-comment-video-thumbnail
+					class="col-xs-6"
+					ng-repeat="video in comment.videos | limitTo:(commentState.showAllVideos ? 10 : 2) track by video.id"
+					video="::video"
+					>
+				</gj-comment-video-thumbnail>
+			</div>
+
+			<div class="comment-widget-comment-videos-more-link"
+				ng-if="comment.videos.length > 2 && !commentState.showAllVideos"
+				>
+				<a class="small link-muted"
+					ng-click="commentState.showAllVideos = true"
+					translate
+					translate-params-$count="comment.videos.length - 2"
+					gj-track-event="comment-widget:more-videos"
+					>
+					+{{ $count }} more videos
+				</a>
+			</div>
+			<br>
+		</div>
+
+		<div class="comment-widget-comment-meta">
+
+			<!--
+				Comment Voting
+			-->
+			<a class="comment-widget-comment-voting"
+				ng-if="::canVote"
+				gj-tooltip="{{ votingTooltip }}"
+				ng-click="onVoteClick()"
+				gj-track-event="comment-widget:vote-click"
+				>
+
+				<!--
+					We make it a sparse i-button that's highlighted when they've voted on the comment,
+					otherwise it's just a simple clear icon.
+				-->
+				<span ng-class="{ 'i-button sparse active': comment.user_vote }">
+					<span class="jolticon jolticon-thumbs-up"></span>
+				</span>
+
+				<span class="blip light" ng-class="{ filled: comment.votes || comment.votes != '0' }">
+					<span class="blip-caret"></span>
+					<span class="blip-count">{{ comment.votes }}</span>
+				</span>
+			</a>
+
+			<span class="blip light no-caret"
+				ng-if="::!canVote"
+				ng-class="{ filled: comment.votes || comment.votes != '0' }"
+				gj-tooltip="{{ votingTooltip }}"
+				gj-track-event="comment-widget:vote-click-notallowed"
+				>
+
+				<span class="blip-count">{{ comment.votes }}</span>
+			</span>
+
+			<!--
+				Only show the reply if isn't a child.
+				We only show it on the parent comments.
+			-->
+			<span ng-if="::!isChild">
+				<span class="dot-separator"></span>
+
+				<a ng-click="onReplyClick()" gj-track-event="comment-widget:reply-click">
+					<span class="jolticon jolticon-reply"></span>
+					<span translate>Reply</span>
+				</a>
+
+			</span>
+
+			<span ng-if="::canFollow">
+				<span class="dot-separator"></span>
+
+				<a
+					ng-if="!ctrl.subscriptions[ comment.id ]"
+					ng-click="onFollowClick()"
+					gj-tooltip="{{ 'Get notifications when people post new replies to this thread.' | translate }}"
+					gj-track-event="comment-widget:follow-click"
+					>
+					<span class="jolticon jolticon-subscribe"></span>
+					<span translate>Follow Thread</span>
+				</a>
+
+				<a class="following"
+					ng-if="ctrl.subscriptions[ comment.id ]"
+					ng-click="onFollowClick()"
+					gj-track-event="comment-widget:follow-click"
+					>
+					<span class="jolticon jolticon-subscribed"></span>
+					<span translate>Stop Following</span>
+				</a>
+			</span>
+
+			<span ng-if="::App.user && (App.user.id != comment.user || App.user.permissionLevel >= 3)">
+				<span class="dot-separator"></span>
+
+				<a
+					gj-tooltip="{{ 'More Options' | translate }}"
+					gj-popover-trigger="comment-more-options-{{ ::comment.id }}"
+					>
+					<span class="jolticon jolticon-ellipsis-h"></span>
+				</a>
+			</span>
+
+		</div>
+
+	</div>
+
+</div>
+
+<gj-popover
+	popover-id="comment-more-options-{{ ::comment.id }}"
+	popover-append-to-body="true"
+	>
+	<div class="list-group list-group-dark">
+		<a class="list-group-item has-icon"
+			ng-if="::App.user.id != comment.user"
+			ng-click="report( comment )"
+			>
+			<span class="jolticon jolticon-flag warning"></span>
+			<span translate>Report Comment</span>
+		</a>
+		<a class="list-group-item has-icon"
+			ng-if="::App.user.permission_level >= 3"
+			ng-href="{{ ::Environment.baseUrl }}/moderate/comments/remove/{{ ::comment.id }}"
+			target="_blank"
+			>
+			<span class="jolticon jolticon-remove warning"></span>
+			Remove Comment
+		</a>
+	</div>
+</gj-popover>

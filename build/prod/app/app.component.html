@@ -1,0 +1,12 @@
+<link rel="stylesheet" ng-href="{{ $ctrl.templates[ $ctrl.site.theme.template.key ].style }}">
+
+<div ng-if="!$ctrl.isLoading">
+	<gj-theme-injector
+		definition="$ctrl.site.theme.template.data"
+		theme="$ctrl.site.theme.data"
+		>
+	</gj-theme-injector>
+
+	<div ng-include="$ctrl.templates[ $ctrl.site.theme.template.key ].view"></div>
+
+</div>
