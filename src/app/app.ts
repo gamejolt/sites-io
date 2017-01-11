@@ -125,7 +125,7 @@ const AppModule = angular.module( 'App', [
 {
 	$sceDelegateProvider.resourceUrlWhitelist( [
 		'self',
-		'https://b6d3e9q9.ssl.hwcdn.net/**',
+		'https://sites-io.gjcdn.net/**',
 	] );
 
 	$locationProvider.html5Mode( true ).hashPrefix( '!' );
