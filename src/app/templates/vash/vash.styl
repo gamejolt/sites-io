@@ -1,17 +1,41 @@
-// Set up the environment.
-// @import '../../../lib/gj-lib-client/stylus/common/functions'
-// @import '../../../lib/gj-lib-client/stylus/common/variables'
-// @import '../../../app/styles/variables'
-
 @import '../../../bower-lib/bootstrap-stylus/stylus/variables'
 @import '../../../bower-lib/bootstrap-stylus/stylus/mixins'
+@import '../../../lib/gj-lib-client/stylus/animation/easing'
 
-// html, body
-// 	background-color: #210002
+body
+	min-height: 100vh
 
 .content
-	// color: #ffaf00
-	font-size: 18px
 
 	h1, h2, h3, h4, h5, h6, p
 		margin-bottom: 1.5rem
+		font-weight: normal
+
+	img
+		display: block
+		max-width: 100%
+		height: auto
+
+.media-bar
+	margin-bottom: $line-height-computed
+	padding: 0
+	background-color: transparent
+	margin: 0 -20px $line-height-computed -20px
+	overflow: visible
+
+	&-items
+		white-space: initial
+
+	&-item
+		width: 50% !important
+		height: auto !important
+		margin: 0 !important
+		padding: 0 20px !important
+		background-color: transparent
+
+		a
+			transition: all 350ms $strong-ease-out
+
+			&::before
+			&::after
+				display: none

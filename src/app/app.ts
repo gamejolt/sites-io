@@ -18,6 +18,14 @@ import PopoverModule from '../lib/gj-lib-client/components/popover/popover';
 import ThemeInjectorModule from '../lib/gj-lib-client/components/theme/injector/injector';
 import CardModule from '../lib/gj-lib-client/components/card/card';
 import CountdownModule from '../lib/gj-lib-client/components/countdown/countdown';
+import SiteModule from '../lib/gj-lib-client/components/site/site';
+import SiteContentBlockModule from '../lib/gj-lib-client/components/site/content-block/content-block';
+import SiteTemplateModule from '../lib/gj-lib-client/components/site/template/template';
+import SiteThemeModule from '../lib/gj-lib-client/components/site/theme/theme';
+import WidgetCompilerModule from '../lib/gj-lib-client/components/widget-compiler/widget-compiler';
+import WidgetCompilerWidgetGamePackagesModule from '../lib/gj-lib-client/components/widget-compiler/widget-game-packages/widget-game-packages';
+import WidgetCompilerWidgetGameMediaModule from '../lib/gj-lib-client/components/widget-compiler/widget-game-media/widget-game-media';
+import WidgetCompilerWidgetGameDescriptionModule from '../lib/gj-lib-client/components/widget-compiler/widget-game-description/widget-game-description';
 
 import { App } from './app-service';
 import { AppComponent } from './app.component';
@@ -60,7 +68,10 @@ const AppModule = angular.module( 'App', [
 	ImgResponsiveModule,
 	VideoEmbedModule,
 
-	'gj.WidgetCompiler',
+	WidgetCompilerModule,
+	WidgetCompilerWidgetGamePackagesModule,
+	WidgetCompilerWidgetGameMediaModule,
+	WidgetCompilerWidgetGameDescriptionModule,
 
 	'gj.MediaItem',
 	'gj.Game.Screenshot',
@@ -100,6 +111,10 @@ const AppModule = angular.module( 'App', [
 	ThemeInjectorModule,
 	CardModule,
 	CountdownModule,
+	SiteModule,
+	SiteContentBlockModule,
+	SiteTemplateModule,
+	SiteThemeModule,
 ] )
 .config( function(
 	$locationProvider: ng.ILocationProvider,

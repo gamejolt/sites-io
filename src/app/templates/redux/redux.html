@@ -3,38 +3,19 @@
 
 		<div class="content">
 			<div
-				gj-widget-compiler-bind="$ctrl.game.description_compiled"
+				gj-widget-compiler-bind="$ctrl.contentBlock.content_compiled"
+				widget-compiler-scope="$ctrl.compilerScope"
 				>
-			</div>
-		</div>
-
-		<br>
-
-		<div class="container" ng-if="$ctrl.packages.length">
-			<div class="row">
-				<div class="col-md-8 offset-md-2">
-
-					<div ng-if="::$ctrl.packages.length">
-						<gj-game-package-card
-							ng-repeat="package in $ctrl.packages"
-							game="::$ctrl.game"
-							sellable="::package._sellable"
-							game-package="::package"
-							game-releases="::package._releases"
-							game-builds="::package._builds"
-							>
-						</gj-game-package-card>
-					</div>
-
-				</div>
 			</div>
 		</div>
 
 	</div>
 	<div class="frame-bottom" ng-if="$ctrl.mediaItems.length">
+
 		<gj-media-bar
 			media-items="$ctrl.mediaItems"
 			>
 		</gj-media-bar>
+
 	</div>
 </div>

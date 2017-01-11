@@ -1,6 +1,13 @@
 import { Component, Inject } from 'ng-metadata/core';
-import { Meta } from '../lib/gj-lib-client/components/meta/meta-service';
 import template from 'html!./app.component.html';
+
+import { Meta } from '../lib/gj-lib-client/components/meta/meta-service';
+import { Site } from '../lib/gj-lib-client/components/site/site-model';
+import { WidgetCompiler } from '../lib/gj-lib-client/components/widget-compiler/widget-compiler-service';
+import { WidgetCompilerWidgetGamePackages } from '../lib/gj-lib-client/components/widget-compiler/widget-game-packages/widget-game-packages.service';
+import { WidgetCompilerWidgetGameMedia } from '../lib/gj-lib-client/components/widget-compiler/widget-game-media/widget-game-media.service';
+import { WidgetCompilerWidgetGameDescription } from '../lib/gj-lib-client/components/widget-compiler/widget-game-description/widget-game-description.service';
+import { SiteContentBlock } from '../lib/gj-lib-client/components/site/content-block/content-block-model';
 
 @Component( {
 	selector: 'gj-app',
@@ -10,14 +17,17 @@ export class AppComponent
 {
 	isLoading = true;
 
-	site: any;
+	site: Site;
 	game: any;
 	mediaItems: any[];
 	packages: any[];
+	contentBlock: SiteContentBlock;
 
 	// Gotta do this so that the injection process works and replaces with the
 	// correct asset server.
 	templates = {};
+
+	compilerScope: ng.IScope;
 
 	constructor(
 		@Inject( '$location' ) $location: ng.ILocationService,
@@ -26,6 +36,12 @@ export class AppComponent
 		@Inject( '$scope' ) private $scope: ng.IScope,
 		@Inject( 'Meta' ) private metaService: Meta,
 		@Inject( 'Api' ) api: any,
+		@Inject( 'WidgetCompiler' ) compiler: WidgetCompiler,
+		@Inject( 'WidgetCompilerWidgetGamePackages' ) widgetPackages: WidgetCompilerWidgetGamePackages,
+		@Inject( 'WidgetCompilerWidgetGameMedia' ) widgetMedia: WidgetCompilerWidgetGameMedia,
+		@Inject( 'WidgetCompilerWidgetGameDescription' ) widgetDescription: WidgetCompilerWidgetGameDescription,
+		@Inject( 'Site' ) private siteModel: typeof Site,
+		@Inject( 'Game' ) private gameModel: any,
 		@Inject( 'Game_Screenshot' ) private screenshotModel: any,
 		@Inject( 'Game_Video' ) private videoModel: any,
 		@Inject( 'Game_Package' ) private packageModel: any,
@@ -47,19 +63,26 @@ export class AppComponent
 
 		api.sendRequest( `/sites-io/${user}/${url}` ).then( ( response: any ) => this.bootstrap( response ) );
 
-		this.$window.addEventListener( 'message', ( event: MessageEvent ) => this.themeUpdated( event ) );
+		this.$window.addEventListener( 'message', ( event: MessageEvent ) => this.message( event ) );
+
+		compiler.setContentClass( 'content' );
+		compiler.addWidget( widgetPackages );
+		compiler.addWidget( widgetMedia );
+		compiler.addWidget( widgetDescription );
+
+		this.compilerScope = $scope.$new( true );
 	}
 
 	private bootstrap( response: any )
 	{
-		console.log( response );
-
 		this.isLoading = false;
 
 		this.metaService.title = 'yo';
 
-		this.site = response.site;
-		this.game = response.game;
+		this.site = new this.siteModel( response.site );
+		this.contentBlock = this.site.content_blocks[0];
+
+		this.game = new this.gameModel( response.game );
 
 		this.mediaItems = [];
 		if ( response.mediaItems && response.mediaItems.length ) {
@@ -77,9 +100,13 @@ export class AppComponent
 		const packageData = this.packageModel.processPackagePayload( response );
 		angular.extend( this, packageData );
 		this.packages = this.packages || [];
+
+		this.compilerScope['game'] = this.game;
+		this.compilerScope['packages'] = this.packages;
+		this.compilerScope['mediaItems'] = this.mediaItems;
 	}
 
-	private themeUpdated( event: MessageEvent )
+	private message( event: MessageEvent )
 	{
 		this.$scope.$apply( () =>
 		{
@@ -91,6 +118,16 @@ export class AppComponent
 					}
 
 					this.site.theme.template = event.data.template;
+					return;
+				};
+
+				case 'content-update': {
+
+					if ( !event.data.block ) {
+						return;
+					}
+
+					this.contentBlock.assign( event.data.block );
 					return;
 				};
 			}
