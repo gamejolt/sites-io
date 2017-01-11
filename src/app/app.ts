@@ -122,6 +122,7 @@ const AppModule = angular.module( 'App', [
 	$uiViewScrollProvider: ng.ui.IUiViewScrollProvider,
 	EnvironmentProvider: any,
 	$sceDelegateProvider: ng.ISCEDelegateProvider,
+	$urlRouterProvider: ng.ui.IUrlRouterProvider,
 )
 {
 	$sceDelegateProvider.resourceUrlWhitelist( [
@@ -139,6 +140,12 @@ const AppModule = angular.module( 'App', [
 	if ( GJ_BUILD_TYPE == 'development' ) {
 		EnvironmentProvider.buildType = 'development';
 	}
+
+	// No routes.
+	$urlRouterProvider.otherwise( () =>
+	{
+		return true;
+	} );
 } )
 .name;
 
