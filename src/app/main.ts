@@ -1,5 +1,4 @@
-import './polyfills';
-
+import '../lib/gj-lib-client/utils/polyfills';
 import * as Vue from 'vue';
 
 import { store } from './store/index';
