@@ -1,0 +1,21 @@
+<div id="theme-redux" class="frameset" :class="{ 'has-media-items': mediaItems.length }">
+	<div class="frame-content">
+
+		<div class="content">
+			<app-widget-compiler
+				:content="contentBlock.content_compiled"
+				:context="compilerContext"
+				>
+			</app-widget-compiler>
+		</div>
+
+	</div>
+	<div class="frame-bottom" v-if="mediaItems.length">
+
+		<gj-media-bar
+			:media-items="mediaItems"
+			>
+		</gj-media-bar>
+
+	</div>
+</div>
