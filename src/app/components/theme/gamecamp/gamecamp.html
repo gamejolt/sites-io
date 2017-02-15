@@ -1,0 +1,38 @@
+<div id="theme-gamecamp">
+	<div v-if="Screen.isMobile">
+		<div class="gamecamp-media-bar">
+			<app-media-bar
+				:media-items="mediaItems"
+				>
+			</app-media-bar>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-10 col-centered">
+					<app-widget-compiler
+						:content="contentBlock.content_compiled"
+						:context="compilerContext"
+						>
+					</app-widget-compiler>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container" v-else>
+		<div class="row">
+			<div class="gamecamp-media-bar col-md-4 col-md-push-8">
+				<app-media-bar
+					:media-items="mediaItems"
+					>
+				</app-media-bar>
+			</div>
+			<div class="col-md-8 col-md-pull-4">
+				<app-widget-compiler
+					:content="contentBlock.content_compiled"
+					:context="compilerContext"
+					>
+				</app-widget-compiler>
+			</div>
+		</div>
+	</div>
+</div>

@@ -29,7 +29,7 @@ export const Actions = {
 class AppWidgetCompilerContext extends WidgetCompilerContext
 {
 	game: Game | null = null;
-	mediaItems: (GameScreenshot | GameVideo)[] = [];
+	mediaItems: (GameScreenshot | GameVideo | GameSketchfab)[] = [];
 	sellables: Sellable[] = [];
 }
 

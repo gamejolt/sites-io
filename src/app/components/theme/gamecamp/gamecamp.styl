@@ -1,0 +1,49 @@
+@import '~styles/variables'
+@import '../../../../lib/gj-lib-client/stylus/animation/easing'
+
+body
+	min-height: 100vh
+	padding-bottom: $grid-gutter-width
+
+@media $media-md-up
+	body
+		padding-top: $grid-gutter-width
+
+#theme-gamecamp
+
+	@import '../../../styles/_scaffolding'
+
+	.widget-compiler-widget-game-packages
+		margin: 0
+
+	.gamecamp-media-bar
+
+		@media $media-mobile
+			.media-bar
+				margin-bottom: $grid-gutter-width
+
+		@media $media-md-up
+			.media-bar
+				padding: 0
+				background-color: transparent
+				overflow: visible
+
+				&-items
+					white-space: initial
+
+				&-item
+					margin: 0
+					margin-bottom: ($grid-gutter-width / 2)
+					width: 100% !important
+					height: auto !important
+					background-color: transparent
+
+					&-wrapper
+						opacity: 1
+
+					a
+						transition: all 350ms $strong-ease-out
+
+						&::before
+						&::after
+							display: none

@@ -40,6 +40,10 @@ export class App extends Vue
 			const mod = await $import<any>( './components/theme/redux/redux' );
 			this.theme = mod.AppThemeRedux;
 		}
+		else if ( theme === 'gamecamp' ) {
+			const mod = await $import<any>( './components/theme/gamecamp/gamecamp' );
+			this.theme = mod.AppThemeGamecamp;
+		}
 	}
 
 	private message( event: MessageEvent )
