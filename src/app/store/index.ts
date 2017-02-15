@@ -12,6 +12,7 @@ import { GameVideo } from '../../lib/gj-lib-client/components/game/video/video.m
 import { SiteTemplate } from '../../lib/gj-lib-client/components/site/template/template-model';
 import { WidgetCompilerContext } from '../../lib/gj-lib-client/components/widget-compiler/widget-compiler.service';
 import { Sellable } from '../../lib/gj-lib-client/components/sellable/sellable.model';
+import { GameSketchfab } from '../../lib/gj-lib-client/components/game/sketchfab/sketchfab.model';
 
 Vue.use( Vuex );
 
@@ -38,7 +39,7 @@ export class StoreState
 	site: Site | null = null;
 	contentBlock: SiteContentBlock | null = null;
 	game: Game | null = null;
-	mediaItems: (GameScreenshot | GameVideo)[] = [];
+	mediaItems: (GameScreenshot | GameVideo | GameSketchfab)[] = [];
 	compilerContext = new AppWidgetCompilerContext();
 }
 
@@ -68,6 +69,9 @@ export const store = new Vuex.Store<StoreState>( {
 					}
 					else if ( item.media_type === 'video' ) {
 						state.mediaItems.push( new GameVideo( item ) );
+					}
+					else if ( item.media_type === 'sketchfab' ) {
+						state.mediaItems.push( new GameSketchfab( item ) );
 					}
 				} );
 			}
