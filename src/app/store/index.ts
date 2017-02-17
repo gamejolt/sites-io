@@ -55,8 +55,6 @@ export const store = new Vuex.Store<StoreState>( {
 		{
 			state.isLoading = false;
 
-			Meta.title = 'yo';
-
 			state.site = new Site( response.site );
 			state.contentBlock = state.site.content_blocks[0];
 			state.game = new Game( response.game );
@@ -79,6 +77,8 @@ export const store = new Vuex.Store<StoreState>( {
 			state.compilerContext.game = state.game;
 			state.compilerContext.mediaItems = state.mediaItems;
 			state.compilerContext.sellables = Sellable.populate( response.sellables );
+
+			Meta.title = state.game.title;
 		},
 		[Mutations.setTemplate]( state, template: SiteTemplate )
 		{
