@@ -13,7 +13,6 @@ import { SiteTemplate } from '../../lib/gj-lib-client/components/site/template/t
 import { WidgetCompilerContext } from '../../lib/gj-lib-client/components/widget-compiler/widget-compiler.service';
 import { Sellable } from '../../lib/gj-lib-client/components/sellable/sellable.model';
 import { GameSketchfab } from '../../lib/gj-lib-client/components/game/sketchfab/sketchfab.model';
-import { Analytics } from '../../lib/gj-lib-client/components/analytics/analytics.service';
 
 Vue.use( Vuex );
 
