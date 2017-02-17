@@ -7,6 +7,7 @@ import { State } from 'vuex-class';
 import { Site } from '../lib/gj-lib-client/components/site/site-model';
 import { SiteContentBlock } from '../lib/gj-lib-client/components/site/content-block/content-block-model';
 import { AppThemeInjector } from '../lib/gj-lib-client/components/theme/injector/injector';
+import { Analytics } from '../lib/gj-lib-client/components/analytics/analytics.service';
 
 @View
 @Component({
@@ -43,6 +44,15 @@ export class App extends Vue
 		else if ( theme === 'gamecamp' ) {
 			const mod = await $import<any>( './components/theme/gamecamp/gamecamp' );
 			this.theme = mod.AppThemeGamecamp;
+		}
+	}
+
+	@Watch( 'site.ga_tracking_id' )
+	onTrackingId( id?: string )
+	{
+		if ( id ) {
+			(window as any).ga( 'create', id, 'auto' );
+			Analytics.trackPageview();
 		}
 	}
 

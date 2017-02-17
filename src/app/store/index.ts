@@ -13,6 +13,7 @@ import { SiteTemplate } from '../../lib/gj-lib-client/components/site/template/t
 import { WidgetCompilerContext } from '../../lib/gj-lib-client/components/widget-compiler/widget-compiler.service';
 import { Sellable } from '../../lib/gj-lib-client/components/sellable/sellable.model';
 import { GameSketchfab } from '../../lib/gj-lib-client/components/game/sketchfab/sketchfab.model';
+import { Analytics } from '../../lib/gj-lib-client/components/analytics/analytics.service';
 
 Vue.use( Vuex );
 
@@ -78,7 +79,10 @@ export const store = new Vuex.Store<StoreState>( {
 			state.compilerContext.mediaItems = state.mediaItems;
 			state.compilerContext.sellables = Sellable.populate( response.sellables );
 
-			Meta.title = state.game.title;
+			Meta.title = state.site.title || state.game.title;
+			if ( state.site.description ) {
+				Meta.description = state.site.description;
+			}
 		},
 		[Mutations.setTemplate]( state, template: SiteTemplate )
 		{
