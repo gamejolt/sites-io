@@ -24,5 +24,21 @@ export class AppThemeGamecamp extends Vue
 	@State compilerContext: any;
 	@State mediaItems: any[];
 
+	hasMediaBar = false;
 	Screen = makeObservableService( Screen );
+
+	onCompiled()
+	{
+		const mediaBar = this.$el.querySelector( '.widget-compiler .media-bar' );
+		const mediaBarSlot = this.$el.querySelector( '.gamecamp-media-bar' );
+
+		if ( !mediaBarSlot || !mediaBar ) {
+			this.hasMediaBar = false;
+			return;
+		}
+
+		mediaBarSlot.innerHTML = '';
+		mediaBarSlot.appendChild( mediaBar );
+		this.hasMediaBar = true;
+	}
 }
