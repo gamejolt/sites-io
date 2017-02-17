@@ -2,38 +2,53 @@
 @import '../../../../lib/gj-lib-client/stylus/animation/easing'
 
 body
-	padding-top: $grid-gutter-width
-	padding-bottom: $grid-gutter-width
 	min-height: 100vh
+	padding-bottom: $grid-gutter-width
+
+@media $media-md-up
+	body
+		padding-top: $grid-gutter-width
 
 #theme-vash
 
 	@import '../../../styles/_scaffolding'
 
 	.media-bar
-		margin: ($grid-gutter-width / 2)
-		margin-left: -200px
-		margin-right: -200px
-		padding: 0
-		background-color: transparent
-		overflow: visible
 
-		&-items
-			white-space: initial
-
-		&-item
-			width: 50% !important
-			height: auto !important
-			margin: 0 !important
-			padding: ($grid-gutter-width / 2) !important
+		@media $media-xs
+			margin-bottom: $grid-gutter-width-xs
+			margin-left: -($grid-gutter-width-xs / 2)
+			margin-right: -($grid-gutter-width-xs / 2)
 			background-color: transparent
 
-			&-wrapper
-				opacity: 1
+		@media $media-sm-up
+			margin: ($grid-gutter-width / 2)
+			margin-left: -($grid-gutter-width / 2)
+			margin-right: -($grid-gutter-width / 2)
+			padding: 0
+			background-color: transparent
+			overflow: visible
 
-			a
-				transition: all 350ms $strong-ease-out
+			@media $media-md-up
+				margin-left: -200px
+				margin-right: -200px
 
-				&::before
-				&::after
-					display: none
+			&-items
+				white-space: initial
+
+			&-item
+				width: 50% !important
+				height: auto !important
+				margin: 0 !important
+				padding: ($grid-gutter-width / 2) !important
+				background-color: transparent
+
+				&-wrapper
+					opacity: 1
+
+				a
+					transition: all 350ms $strong-ease-out
+
+					&::before
+					&::after
+						display: none
