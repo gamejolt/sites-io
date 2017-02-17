@@ -10,8 +10,10 @@ import { WidgetCompiler } from '../lib/gj-lib-client/components/widget-compiler/
 import { WidgetCompilerWidgetGameMedia } from '../lib/gj-lib-client/components/widget-compiler/widget-game-media/widget-game-media.service';
 import { WidgetCompilerWidgetGameDescription } from '../lib/gj-lib-client/components/widget-compiler/widget-game-description/widget-game-description.service';
 import { WidgetCompilerWidgetGamePackages } from '../lib/gj-lib-client/components/widget-compiler/widget-game-packages/widget-game-packages.service';
+import { Meta } from '../lib/gj-lib-client/components/meta/meta-service';
 
 Payload.initVue( store );
+Meta.titleSuffix = '';
 
 Loader.addLoader( new HammerVueLoader() );
 
