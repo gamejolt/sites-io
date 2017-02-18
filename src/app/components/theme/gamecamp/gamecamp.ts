@@ -27,6 +27,12 @@ export class AppThemeGamecamp extends Vue
 	hasMediaBar = false;
 	Screen = makeObservableService( Screen );
 
+	created()
+	{
+		window.document.body.className = '';
+		window.document.body.classList.add( 'theme-gamecamp' );
+	}
+
 	onCompiled()
 	{
 		const mediaBar = this.$el.querySelector( '.widget-compiler .media-bar' );

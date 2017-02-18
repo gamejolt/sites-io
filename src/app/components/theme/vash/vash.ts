@@ -18,4 +18,10 @@ export class AppThemeVash extends Vue
 {
 	@State contentBlock: any;
 	@State compilerContext: any;
+
+	created()
+	{
+		window.document.body.className = '';
+		window.document.body.classList.add( 'theme-vash' );
+	}
 }
