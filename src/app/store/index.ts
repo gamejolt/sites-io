@@ -13,6 +13,7 @@ import { SiteTemplate } from '../../lib/gj-lib-client/components/site/template/t
 import { WidgetCompilerContext } from '../../lib/gj-lib-client/components/widget-compiler/widget-compiler.service';
 import { Sellable } from '../../lib/gj-lib-client/components/sellable/sellable.model';
 import { GameSketchfab } from '../../lib/gj-lib-client/components/game/sketchfab/sketchfab.model';
+import { User } from '../../lib/gj-lib-client/components/user/user.model';
 
 Vue.use( Vuex );
 
@@ -28,15 +29,18 @@ export const Actions = {
 
 class AppWidgetCompilerContext extends WidgetCompilerContext
 {
+	user: User | null = null;
 	game: Game | null = null;
 	mediaItems: (GameScreenshot | GameVideo | GameSketchfab)[] = [];
 	sellables: Sellable[] = [];
+	games: Game[] = [];
 }
 
 export class StoreState
 {
 	isLoading = true;
 	site: Site | null = null;
+	user: User | null = null;
 	contentBlock: SiteContentBlock | null = null;
 	game: Game | null = null;
 	mediaItems: (GameScreenshot | GameVideo | GameSketchfab)[] = [];
@@ -56,29 +60,44 @@ export const store = new Vuex.Store<StoreState>( {
 			state.isLoading = false;
 
 			state.site = new Site( response.site );
+			state.user = new User( response.user );
 			state.contentBlock = state.site.content_blocks[0];
-			state.game = new Game( response.game );
 
-			if ( response.mediaItems && response.mediaItems.length ) {
-				response.mediaItems.forEach( ( item: any ) =>
-				{
-					if ( item.media_type === 'image' ) {
-						state.mediaItems.push( new GameScreenshot( item ) );
-					}
-					else if ( item.media_type === 'video' ) {
-						state.mediaItems.push( new GameVideo( item ) );
-					}
-					else if ( item.media_type === 'sketchfab' ) {
-						state.mediaItems.push( new GameSketchfab( item ) );
-					}
-				} );
+			state.compilerContext.user = state.user;
+
+			if ( response.game ) {
+				state.game = new Game( response.game );
+
+				if ( response.mediaItems && response.mediaItems.length ) {
+					response.mediaItems.forEach( ( item: any ) =>
+					{
+						if ( item.media_type === 'image' ) {
+							state.mediaItems.push( new GameScreenshot( item ) );
+						}
+						else if ( item.media_type === 'video' ) {
+							state.mediaItems.push( new GameVideo( item ) );
+						}
+						else if ( item.media_type === 'sketchfab' ) {
+							state.mediaItems.push( new GameSketchfab( item ) );
+						}
+					} );
+				}
+
+				state.compilerContext.game = state.game;
+				state.compilerContext.mediaItems = state.mediaItems;
+				state.compilerContext.sellables = Sellable.populate( response.sellables );
+			}
+			else if ( response.games ) {
+				state.compilerContext.games = Game.populate( response.games );
 			}
 
-			state.compilerContext.game = state.game;
-			state.compilerContext.mediaItems = state.mediaItems;
-			state.compilerContext.sellables = Sellable.populate( response.sellables );
+			if ( state.game ) {
+				Meta.title = state.site.title || state.game.title;
+			}
+			else {
+				Meta.title = state.site.title || state.user.display_name;
+			}
 
-			Meta.title = state.site.title || state.game.title;
 			if ( state.site.description ) {
 				Meta.description = state.site.description;
 			}
@@ -106,8 +125,13 @@ export const store = new Vuex.Store<StoreState>( {
 				);
 			}
 
-			const url = window.location.pathname.substr( 1 );
-			const response = await Api.sendRequest( `/sites-io/${user}/${url}` );
+			// Trim any trailing slashes from the pathname.
+			let url = window.location.pathname;
+			if ( url[ url.length - 1 ] === '/' ) {
+				url = url.substring( 0, url.length - 1 );
+			}
+
+			const response = await Api.sendRequest( `/sites-io/${user}${url}` );
 
 			commit( Mutations.bootstrap, response );
 		},

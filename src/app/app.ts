@@ -8,6 +8,13 @@ import { Site } from '../lib/gj-lib-client/components/site/site-model';
 import { SiteContentBlock } from '../lib/gj-lib-client/components/site/content-block/content-block-model';
 import { AppThemeInjector } from '../lib/gj-lib-client/components/theme/injector/injector';
 import { Analytics } from '../lib/gj-lib-client/components/analytics/analytics.service';
+import { WidgetCompiler } from '../lib/gj-lib-client/components/widget-compiler/widget-compiler.service';
+import { WidgetCompilerWidgetUserBio } from '../lib/gj-lib-client/components/widget-compiler/widget-user-bio/widget-user-bio.service';
+import { WidgetCompilerWidgetGameMedia } from '../lib/gj-lib-client/components/widget-compiler/widget-game-media/widget-game-media.service';
+import { WidgetCompilerWidgetGameDescription } from '../lib/gj-lib-client/components/widget-compiler/widget-game-description/widget-game-description.service';
+import { WidgetCompilerWidgetGameList } from '../lib/gj-lib-client/components/widget-compiler/widget-game-list/widget-game-list.service';
+import { WidgetCompilerWidgetGamePackages } from '../lib/gj-lib-client/components/widget-compiler/widget-game-packages/widget-game-packages.service';
+import { Game } from '../lib/gj-lib-client/components/game/game.model';
 
 @View
 @Component({
@@ -20,13 +27,30 @@ export class App extends Vue
 {
 	@State isLoading: boolean;
 	@State site: Site;
+	@State game: Game;
 	@State contentBlock: SiteContentBlock;
 
 	theme: typeof Vue | null = null;
 
 	async created()
 	{
+		WidgetCompiler.setContentClass( 'content' );
 		this.$store.dispatch( Actions.bootstrap );
+	}
+
+	@Watch( 'site' )
+	onSiteBootstrapped()
+	{
+		if ( this.game ) {
+			WidgetCompiler.addWidget( new WidgetCompilerWidgetGameMedia() );
+			WidgetCompiler.addWidget( new WidgetCompilerWidgetGameDescription() );
+			WidgetCompiler.addWidget( new WidgetCompilerWidgetGamePackages() );
+		}
+		else {
+			WidgetCompiler.addWidget( new WidgetCompilerWidgetUserBio() );
+			WidgetCompiler.addWidget( new WidgetCompilerWidgetGameList() );
+		}
+
 		window.addEventListener( 'message', ( event ) => this.message( event ) );
 	}
 
