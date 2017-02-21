@@ -114,24 +114,42 @@ export const store = new Vuex.Store<StoreState>( {
 	actions: {
 		async [Actions.bootstrap]( { commit } )
 		{
-			let user;
+			let hostname = window.location.hostname;
+
 			if ( GJ_BUILD_TYPE === 'development' ) {
-				user = 'cros';
+				hostname = 'cros.gamejolt.io';
+				// hostname = 'cros.com';
+			}
+
+			let user, domain;
+
+			// Custom domain.
+			if ( !hostname.endsWith( '.gamejolt.io' ) ) {
+				domain = hostname;
 			}
 			else {
-				user = window.location.host.substr(
+				user = hostname.substr(
 					0,
-					window.location.host.indexOf( '.' ),
+					hostname.indexOf( '.' ),
 				);
 			}
 
-			// Trim any trailing slashes from the pathname.
-			let url = window.location.pathname;
-			if ( url[ url.length - 1 ] === '/' ) {
-				url = url.substring( 0, url.length - 1 );
+			// Trim any slashes from the pathname.
+			let path = window.location.pathname;
+			if ( path[0] === '/' ) {
+				path = path.substring( 1 );
+			}
+			if ( path[ path.length - 1 ] === '/' ) {
+				path = path.substring( 0, path.length - 1 );
 			}
 
-			const response = await Api.sendRequest( `/sites-io/${user}${url}` );
+			const data = {
+				domain,
+				user,
+				path,
+			};
+
+			const response = await Api.sendRequest( `/sites-io`, data );
 
 			commit( Mutations.bootstrap, response );
 		},
