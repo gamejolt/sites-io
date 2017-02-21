@@ -3,14 +3,21 @@
 
 body.theme-vash
 	min-height: 100vh
-	padding-bottom: $grid-gutter-width
 
 	@media $media-md-up
 		padding-top: $grid-gutter-width
+		padding-bottom: $grid-gutter-width
 
 	@import '../../../styles/_scaffolding'
 
+	.content-container
+		padding-top: ($grid-gutter-width / 2)
+		padding-bottom: ($grid-gutter-width / 2)
+
 	.media-bar
+
+		&:first-child
+			margin-top: 0
 
 		@media $media-xs
 			margin-bottom: $grid-gutter-width-xs
