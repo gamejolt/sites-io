@@ -5,6 +5,11 @@ body.theme-redux
 	background-color: black
 	padding: 30px
 
+	// Keep this big.
+	// Big monitors don't exist, right?
+	// Why worry about them.
+	$max-width: 1000px
+
 	.content
 		font-family: "Comic Sans MS", "Comic Sans", cursive
 		color: yellow
@@ -30,7 +35,8 @@ body.theme-redux
 
 		img
 			display: inline-block
-			max-width: 100%
+			width: 100%
+			max-width: 1000px
 			height: auto
 			vertical-align: top
 
@@ -58,72 +64,3 @@ body.theme-redux
 
 	.media-bar
 		background-color: transparent
-
-	.frameset
-		position: absolute
-		top: 0t
-		font-family: "Comic Sans MS", "Comic Sans", cursive
-		color: yellow
-		font-size: 16px
-		text-align: center
-
-		h1, h2, h3, h4, h5, h6, p
-			margin-bottom: 1.5rem
-
-		h1, h2, h3, h4, h5, h6
-			color: red
-			font-family: "Comic Sans MS", "Comic Sans", Arial, Helvetica, sans-serif
-
-		a
-		a:hover
-			color: blue
-
-		hr
-			border-bottom: 5px ridge
-
-		blockquote
-			border: 0
-
-	.frameset
-		position: absolute
-		top: 0
-		right: 0
-		bottom: 0
-		left: 0
-
-	.frame-content
-	.frame-bottom
-		position: absolute
-		right: 0
-		left: 0
-		overflow: auto
-
-	.frame-bottom
-		bottom: 0
-		height: 190px
-		border-top: 5px ridge
-
-	.frame-content
-		top: 0
-		bottom: 0
-		overflow-x: hidden
-		right: 0
-		bottom: 0
-		left: 0
-
-	.frame-content
-	.frame-bottom
-		position: absolute
-		right: 0
-		left: 0
-		overflow: auto
-
-	.frame-bottom
-		bottom: 0
-		height: 190px
-		border-top: 5px ridge
-
-	.frame-content
-		top: 0
-		bottom: 0
-		overflow-x: hidden
