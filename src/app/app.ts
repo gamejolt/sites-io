@@ -2,7 +2,7 @@ import * as Vue from 'vue';
 import { Component, Watch } from 'vue-property-decorator';
 import * as View from '!view!./app.html';
 
-import { Actions, Mutations } from './store/index';
+import { Actions, Mutations, Store } from './store/index';
 import { State } from 'vuex-class';
 import { Site } from '../lib/gj-lib-client/components/site/site-model';
 import { SiteContentBlock } from '../lib/gj-lib-client/components/site/content-block/content-block-model';
@@ -15,6 +15,7 @@ import { WidgetCompilerWidgetGameDescription } from '../lib/gj-lib-client/compon
 import { WidgetCompilerWidgetGameList } from '../lib/gj-lib-client/components/widget-compiler/widget-game-list/widget-game-list.service';
 import { WidgetCompilerWidgetGamePackages } from '../lib/gj-lib-client/components/widget-compiler/widget-game-packages/widget-game-packages.service';
 import { Game } from '../lib/gj-lib-client/components/game/game.model';
+import { isPrerender } from '../lib/gj-lib-client/components/environment/environment.service';
 
 @View
 @Component({
@@ -32,10 +33,15 @@ export class App extends Vue
 
 	theme: typeof Vue | null = null;
 
+	static preFetch( store: Store )
+	{
+		return store.dispatch( Actions.bootstrap );
+	}
+
 	async created()
 	{
 		WidgetCompiler.setContentClass( 'content' );
-		this.$store.dispatch( Actions.bootstrap );
+		App.preFetch( this.$store );
 	}
 
 	@Watch( 'site' )
@@ -51,7 +57,9 @@ export class App extends Vue
 			WidgetCompiler.addWidget( new WidgetCompilerWidgetGameList() );
 		}
 
-		window.addEventListener( 'message', ( event ) => this.message( event ) );
+		if ( !isPrerender ) {
+			window.addEventListener( 'message', ( event ) => this.message( event ) );
+		}
 	}
 
 	@Watch( 'site.theme.template.key' )

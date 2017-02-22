@@ -1,20 +1,8 @@
-import '../lib/gj-lib-client/utils/polyfills';
-import * as Vue from 'vue';
+import { app } from './bootstrap';
 
-import { store } from './store/index';
-import { Payload } from '../lib/gj-lib-client/components/payload/payload-service';
-import { App } from './app';
-import { Loader } from '../lib/gj-lib-client/components/loader/loader.service';
-import { HammerVueLoader } from '../lib/gj-lib-client/components/loader/hammer-vue-loader';
-import { Meta } from '../lib/gj-lib-client/components/meta/meta-service';
+// // prime the store with server-initialized state.
+// // the state is determined during SSR and inlined in the page markup.
+// store.replaceState(window.__INITIAL_STATE__)
+console.log( window.__INITIAL_STATE__ );
 
-Payload.initVue( store );
-Meta.titleSuffix = '';
-
-Loader.addLoader( new HammerVueLoader() );
-
-new Vue( {
-	el: '#app',
-	store,
-	render: ( h ) => h( App ),
-} );
+app.$mount( '#app' );
