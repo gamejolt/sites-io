@@ -124,7 +124,7 @@ export const store = new Vuex.Store<StoreState>( {
 			let user, domain;
 
 			// Custom domain.
-			if ( !hostname.endsWith( '.gamejolt.io' ) ) {
+			if ( !hostname.endsWith( '.gamejolt.io' ) && !hostname.endsWith( '.indie.af' ) ) {
 				domain = hostname;
 			}
 			else {
