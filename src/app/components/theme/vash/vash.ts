@@ -1,27 +1,26 @@
-import * as Vue from 'vue';
+import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
-import * as View from '!view!./vash.html';
+import View from '!view!./vash.html';
 
 import { AppWidgetCompiler } from '../../../../lib/gj-lib-client/components/widget-compiler/widget-compiler';
+import { Store } from '../../../store/index';
 
-require( './vash.styl' );
+require('./vash.styl');
 
 @View
 @Component({
 	name: 'theme-vash',
 	components: {
 		AppWidgetCompiler,
-	}
+	},
 })
-export class AppThemeVash extends Vue
-{
-	@State contentBlock: any;
-	@State compilerContext: any;
+export class AppThemeVash extends Vue {
+	@State contentBlock: Store['contentBlock'];
+	@State compilerContext: Store['compilerContext'];
 
-	created()
-	{
-		window.document.body.className = '';
-		window.document.body.classList.add( 'theme-vash' );
+	mounted() {
+		document.body.className = '';
+		document.body.classList.add('theme-vash');
 	}
 }

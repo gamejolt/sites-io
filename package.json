@@ -1,28 +1,34 @@
 {
-  "name": "gameserver",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "gulp watch",
-    "build": "gulp --production"
-  },
-  "dependencies": {
-    "bootstrap-stylus": "hworld/bootstrap-stylus#master",
-    "core-js": "2.4.1",
-    "rxjs": "5.1.1",
-    "superagent": "3.4.3",
-    "vue": "2.1.10",
-    "vue-class-component": "4.4.0",
-    "vue-property-decorator": "3.4.0",
-    "vue-shortkey": "2.0.9",
-    "vue-touch": "2.0.0-beta.4",
-    "vuex": "2.1.2",
-    "vuex-class": "0.1.3",
-    "reflect-metadata": "0.1.9"
-  },
-  "devDependencies": {
-    "@types/node": "7.0.3",
-    "@types/superagent": "2.0.36",
-    "game-jolt-frontend-lib": "gamejolt/frontend-lib#master"
-  }
+	"name": "sites-io",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "gulp watch",
+		"build": "gulp --production"
+	},
+	"dependencies": {
+		"core-js": "2.5.1",
+		"rxjs": "5.5.2",
+		"vue": "2.5.16",
+		"vue-class-component": "6.2.0",
+		"vue-property-decorator": "6.0.0",
+		"vue-shortkey": "2.2.1",
+		"vue-touch": "2.0.0-beta.4",
+		"vuex": "3.0.1",
+		"vuex-class": "0.3.0",
+		"vue-server-renderer": "2.5.16",
+		"vue-template-compiler": "2.5.16",
+		"reflect-metadata": "0.1.12",
+		"tslib": "1.8.0",
+		"tslint": "5.8.0",
+		"typescript": "2.6.1",
+		"axios": "0.17.1",
+		"simplebar": "2.6.1",
+		"vue-gettext": "github:gamejolt/vue-gettext#lazy"
+	},
+	"devDependencies": {
+		"@types/node": "8.0.53",
+		"@types/simplebar": "2.4.1",
+		"game-jolt-frontend-lib": "link:src/lib/gj-lib-client"
+	}
 }

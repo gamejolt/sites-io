@@ -1,27 +1,26 @@
-import * as Vue from 'vue';
+import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
-import * as View from '!view!./redux.html';
+import View from '!view!./redux.html';
 
 import { AppWidgetCompiler } from '../../../../lib/gj-lib-client/components/widget-compiler/widget-compiler';
+import { Store } from '../../../store/index';
 
-require( './redux.styl' );
+require('./redux.styl');
 
 @View
 @Component({
 	name: 'theme-redux',
 	components: {
 		AppWidgetCompiler,
-	}
+	},
 })
-export class AppThemeRedux extends Vue
-{
-	@State contentBlock: any;
-	@State compilerContext: any;
+export class AppThemeRedux extends Vue {
+	@State contentBlock: Store['contentBlock'];
+	@State compilerContext: Store['compilerContext'];
 
-	created()
-	{
-		window.document.body.className = '';
-		window.document.body.classList.add( 'theme-redux' );
+	mounted() {
+		document.body.className = '';
+		document.body.classList.add('theme-redux');
 	}
 }

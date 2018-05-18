@@ -1,9 +1,11 @@
-var gulp = require( 'gulp' );
+var gulp = require('gulp');
 
 var config = {
 	staticCdn: 'https://s.gjcdn.net/sites-io',
 	port: 8090,
-	framework: 'vue',
+	sections: {
+		app: {}
+	}
 };
 
-require( './src/lib/gj-lib-client/gulp/tasks/common.js' )( config, __dirname );
+require('./src/lib/gj-lib-client/gulp/tasks/common.js')(config, __dirname);

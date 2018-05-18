@@ -1,14 +1,12 @@
-<div>
+<div v-if="!isLoading">
+	<app-theme
+		:theme="theme"
+		/>
 
-	<div v-if="!isLoading">
-		<app-theme-injector
-			:definition="site.theme.template.data"
-			:theme="site.theme.data"
-			>
-		</app-theme-injector>
+	<app-theme-injector
+		:definition="site.theme.template.data"
+		:theme="site.theme.data"
+		/>
 
-		<component :is="theme"></component>
-
-	</div>
-
+	<component :is="siteTheme" />
 </div>

@@ -17,39 +17,21 @@ body.theme-gamecamp
 		margin: 0
 
 	.gamecamp-media-bar
+		.media-bar
+			background-color: transparent
 
-		@media $media-mobile
-			.media-bar
+			@media $media-mobile
 				margin-bottom: ($grid-gutter-width / 2)
-				background-color: transparent
 
-		@media $media-sm
-			.media-bar-item
-				width: 300px !important
-				height: auto !important
-
-		@media $media-md-up
-			.media-bar
-				padding: 0
-				background-color: transparent
-				overflow: visible
-
-				&-items
+			@media $media-md-up
+				.-items
+					height: auto !important
+					padding: 0
 					white-space: initial
 
-				&-item
+				.media-bar-item
 					margin: 0
 					margin-bottom: ($grid-gutter-width / 2)
 					width: 100% !important
 					height: auto !important
 					background-color: transparent
-
-					&-wrapper
-						opacity: 1
-
-					a
-						transition: all 350ms $strong-ease-out
-
-						&::before
-						&::after
-							display: none

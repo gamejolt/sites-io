@@ -14,7 +14,6 @@ body.theme-vash
 		padding-bottom: ($grid-gutter-width / 2)
 
 	.media-bar
-
 		&:first-child
 			margin-top: 0
 
@@ -40,28 +39,18 @@ body.theme-vash
 				margin-left: -200px
 				margin-right: -200px
 
-			&-items
+			.-items
+				height: auto !important
 				white-space: initial
 
-			&-item
+			.media-bar-item
 				width: 50% !important
 				height: auto !important
 				margin: 0 !important
 				padding: ($grid-gutter-width / 2) !important
 				background-color: transparent
 
-				&-wrapper
-					opacity: 1
-
-				a
-					transition: all 350ms $strong-ease-out
-
-					&::before
-					&::after
-						display: none
-
 	.widget-compiler-widget-game-list
-
 		@media $media-sm-up
 			margin-left: -($grid-gutter-width / 2)
 			margin-right: -($grid-gutter-width / 2)
