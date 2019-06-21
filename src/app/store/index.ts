@@ -63,7 +63,7 @@ export class Store extends VuexStore<Store, Actions, Mutations> {
 		let hostname = window.location.hostname;
 
 		if (GJ_BUILD_TYPE === 'development') {
-			hostname = 'cros.gamejolt.io';
+			hostname = 'user.gamejolt.io';
 		}
 
 		let user, domain;
