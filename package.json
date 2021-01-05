@@ -22,7 +22,7 @@
 		"tslib": "1.8.0",
 		"tslint": "5.8.0",
 		"typescript": "2.6.1",
-		"axios": "0.17.1",
+		"axios": "0.21.1",
 		"simplebar": "2.6.1",
 		"vue-gettext": "github:gamejolt/vue-gettext#lazy"
 	},
